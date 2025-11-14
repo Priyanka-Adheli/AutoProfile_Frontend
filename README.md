@@ -90,29 +90,6 @@ It supports **AI-enhanced summaries**, **experience descriptions**, **job respon
 
 ---
 
-# 🧱 **System Architecture**
-
-```
-┌──────────────────────────────┐
-│            Frontend          │
-│    (React + Vite + Axios)    │
-└───────────────┬──────────────┘
-                │ HTTP + Cookies
-┌───────────────▼──────────────┐
-│           Backend API         │
-│   (Node + Express + Redis)    │
-└───────────────┬──────────────┘
-                │ Queries / Models
-┌───────────────▼──────────────┐
-│       MongoDB Database        │
-└───────────────────────────────┘
-
-┌──────────────────────────────┐
-│         OpenAI / Gemini      │
-│     (AI Text + Extraction)   │
-└───────────────────────────────┘
-```
-
 ---
 
 # 📑 **Core Modules**
@@ -149,90 +126,6 @@ It supports **AI-enhanced summaries**, **experience descriptions**, **job respon
 * CORS configured for production
 * Environment variables secured
 * Redis caching to prevent repeated AI calls
-
----
-
-# 📦 **Folder Structure**
-
-### **Frontend**
-
-```
-/src
-  /pages
-  /components
-  /app
-  /assets
-  /configs
-index.html
-vite.config.js
-vercel.json
-```
-
-### **Backend**
-
-```
-/controllers
-/routes
-/middlewares
-/config
-/modules (Schemas)
-index.js
-.env (ignored)
-```
-
----
-
-# 🖥 **API Endpoints Overview**
-
-### **Auth**
-
-| Method | Route             | Description            |
-| ------ | ----------------- | ---------------------- |
-| POST   | `/users/register` | Register a new user    |
-| POST   | `/users/login`    | Login & set JWT cookie |
-| GET    | `/users/profile`  | Get logged-in user     |
-
----
-
-### **Resume**
-
-| Method | Route                 | Description                      |
-| ------ | --------------------- | -------------------------------- |
-| POST   | `/resumes/create`     | Create a new resume              |
-| PUT    | `/resumes/update/:id` | Update resume fields             |
-| GET    | `/resumes/:id`        | Fetch resume                     |
-| POST   | `/resumes/upload`     | Upload PDF resume & extract data |
-
----
-
-### **AI**
-
-| Method | Route                 | Description                       |
-| ------ | --------------------- | --------------------------------- |
-| POST   | `/ai/enhance-summary` | Improve summary                   |
-| POST   | `/ai/enhance-jobdesc` | Improve job description           |
-| POST   | `/ai/extract-resume`  | Extract details from uploaded PDF |
-
----
-
-# 📁 **Environment Variables**
-
-Backend (`.env`)
-
-```
-PORT=5000
-MONGO_URI=...
-JWT_SECRET=...
-FRONTEND_URL=https://autoprofile.vercel.app
-REDIS_URL=...
-OPENAI_API_KEY=...
-```
-
-Frontend (`.env`)
-
-```
-VITE_BACKEND_URL=https://autoprofile-backend.onrender.com
-```
 
 ---
 
@@ -290,15 +183,3 @@ User uploads resume → AI extracts → auto-fills builder fields.
 
 **AutoProfile** is a modern, fast, and fully AI-powered resume builder built for simplicity and performance.
 It bridges design, usability, and AI assistance to provide a seamless resume-building experience for students, professionals, and job seekers.
-
----
-
-If you want, I can also create:
-
-✅ Full GitHub README version
-✅ Project Report (University format)
-✅ System Design Diagram
-✅ UML Diagrams
-✅ API documentation (Swagger style)
-
-Just tell me!
