@@ -86,7 +86,7 @@ It supports **AI-enhanced summaries**, **experience descriptions**, **job respon
 * **Vercel** → Frontend
 * **Render** → Backend
 * **MongoDB Atlas** → Database
-* **Cloudinary / Local Upload** (optional)
+* **Image Kit** 
 
 ---
 
