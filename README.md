@@ -90,8 +90,6 @@ It supports **AI-enhanced summaries**, **experience descriptions**, **job respon
 
 ---
 
----
-
 # 📑 **Core Modules**
 
 ### **1. User Module**
