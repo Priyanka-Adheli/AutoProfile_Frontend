@@ -1,183 +1,162 @@
-Below is a **clean, professional-grade documentation** for your project **AutoProfile** — written in real-world, industry-style format, suitable for GitHub README, college submission, or portfolio.
+# AutoProfile — Frontend
+
+The web client for **AutoProfile**, an AI-assisted resume builder. Built with Vite + React 19, Redux Toolkit, Tailwind CSS 4, and React Router 7. It talks to the AutoProfile backend over Axios with cookie-based auth.
 
 ---
 
-# 🌟 **AutoProfile — AI-Powered Resume Builder**
+## Tech Stack
 
-**Simple. Elegant. Smart.**
-
-AutoProfile is an AI-driven resume-building platform that allows users to **generate**, **edit**, **enhance**, and **download** professional resumes in multiple templates.
-It supports **AI-enhanced summaries**, **experience descriptions**, **job responsibilities**, and also allows **resume upload → auto-extraction of data** via AI.
-
----
-
-# 📌 **Key Features**
-
-### 🚀 1. AI-Powered Resume Generation
-
-* Generate resumes using **4 clean, modern templates**
-* Modify theme using **dynamic color accents**
-* Edit, update, and preview changes in real time
-
-### 🤖 2. AI-Assisted Content Enhancement
-
-* Enhance **Professional Summary**
-* Improve **Work Experience**
-* Rewrite **Job Descriptions**
-* Convert raw text → **polished professional content**
-
-### 📤 3. Upload Existing Resume (PDF)
-
-* Upload any resume
-* AI extracts:
-
-  * Personal Info
-  * Skills
-  * Experience
-  * Education
-  * Projects
-  * Summary
-* Automatically fits extracted data into templates
-
-### 🎨 4. UI/UX
-
-* Elegant, minimal, fully responsive UI
-* Customizable colors, modern form design
-* Smooth editing experience with autosave
-
-### 🔒 5. Authentication
-
-* Login / Register
-* Secure JWT cookies (HTTP-only, protected)
-* Redis for session caching and scalability
-
-### ⚙ 6. Community-Grade Full-Stack Architecture
-
-* Modern frontend with Vite + React
-* Scalable backend with Node.js + Express
-* MongoDB for persistent resume storage
-* Redis for caching + performance
-* OpenAI (Gemini or GPT-based) for AI processing
-* Production deployment on Vercel (frontend) + Render (backend)
+- **Vite 7** — dev server / build tool
+- **React 19** + **React Router DOM 7**
+- **Redux Toolkit** + **react-redux** — auth state
+- **Tailwind CSS 4** (via `@tailwindcss/vite`)
+- **Axios** — HTTP client (`withCredentials: true`)
+- **lucide-react** — icon set
+- **react-hot-toast** — toast notifications
+- **react-pdftotext** — client-side PDF text extraction for resume upload
+- **ESLint 9** — flat config with React Hooks + React Refresh plugins
 
 ---
 
-# 🛠 **Tech Stack**
+## Project Structure
 
-## **Frontend**
-
-* **Vite**
-* **React**
-* **Axios**
-* **Tailwind CSS**
-* **React Router**
-* **Redux Toolkit**
-
-## **Backend**
-
-* **Node.js**
-* **Express.js**
-* **MongoDB + Mongoose**
-* **Redis**
-* **OpenAI API (Gemini or GPT models)**
-
-## **Deployment**
-
-* **Vercel** → Frontend
-* **Render** → Backend
-* **MongoDB Atlas** → Database
-* **Image Kit** 
-
----
-
-# 📑 **Core Modules**
-
-### **1. User Module**
-
-* **Register**
-* **Login**
-* **JWT-based authentication**
-* **Password validation**
-* **Secure cookie-based tokens**
-
-### **2. Resume Module**
-
-* Create resume
-* Update fields
-* Switch templates
-* Change accent colors
-* Download final PDF
-
-### **3. AI Module**
-
-* Summary enhancement
-* Experience rewriting
-* Skills refinement
-* Resume content extraction from uploaded PDF
-
----
-
-# 🔐 **Security Features**
-
-* HTTP-only cookies to prevent XSS token theft
-* Password hashing using bcrypt
-* CORS configured for production
-* Environment variables secured
-* Redis caching to prevent repeated AI calls
+```
+AutoProfile_Frontend/
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── app/
+│   │   ├── features/
+│   │   │   └── authSlice.js        # user + loading state
+│   │   └── store.js                # Redux store
+│   ├── assets/
+│   │   ├── assets.js
+│   │   ├── dummy_profile.png
+│   │   ├── logo.svg
+│   │   └── templates/              # resume template components
+│   │       ├── ClassicTemplate.jsx
+│   │       ├── MinimalTemplate.jsx
+│   │       ├── MinimalImageTemplate.jsx
+│   │       └── ModernTemplate.jsx
+│   ├── components/
+│   │   ├── home/                   # landing page sections
+│   │   │   ├── Banners.jsx
+│   │   │   ├── Hero.jsx
+│   │   │   ├── Features.jsx
+│   │   │   ├── Testimonial.jsx
+│   │   │   ├── CallToAction.jsx
+│   │   │   ├── Footer.jsx
+│   │   │   └── Title.jsx
+│   │   ├── PersonalInfoForm.jsx
+│   │   ├── ProfessionalSummaryForm.jsx
+│   │   ├── ExperienceForm.jsx
+│   │   ├── EducationForm.jsx
+│   │   ├── ProjectForm.jsx
+│   │   ├── SkillsForm.jsx
+│   │   ├── TemplateSelector.jsx
+│   │   ├── ColorPicker.jsx
+│   │   ├── ResumePreview.jsx
+│   │   ├── Navbar.jsx
+│   │   └── Loader.jsx
+│   ├── configs/
+│   │   └── axiosClient.js          # axios instance, reads VITE_BASE_URL
+│   ├── pages/
+│   │   ├── Home.jsx                # public landing
+│   │   ├── Login.jsx               # login / register
+│   │   ├── Layout.jsx              # authed shell (Navbar + Outlet)
+│   │   ├── Dashboard.jsx           # list / create resumes
+│   │   ├── ResumeBuilder.jsx       # section-by-section editor
+│   │   └── Preview.jsx             # public share view
+│   ├── App.jsx                     # routes + initial user fetch
+│   ├── main.jsx                    # Provider + BrowserRouter bootstrap
+│   ├── App.css
+│   └── index.css
+├── index.html
+├── vite.config.js
+├── vercel.json                     # SPA rewrite to /index.html
+├── eslint.config.js
+└── package.json
+```
 
 ---
 
-# 🚀 **How AutoProfile Works (User Flow)**
+## Routes
 
-### **1. Auth**
+| Path                       | Component        | Notes                              |
+| -------------------------- | ---------------- | ---------------------------------- |
+| `/`                        | `Home`           | Public landing page                |
+| `/login`                   | `Login`          | Login / register                   |
+| `/app`                     | `Layout` → `Dashboard` | Resume dashboard             |
+| `/app/builder/:resumeId`   | `ResumeBuilder`  | Full editor for a resume           |
+| `/view/:resumeId`          | `Preview`        | Shareable preview view             |
 
-User registers → logs in → gets authenticated via secure JWT cookies.
-
-### **2. Resume Creation**
-
-User adds personal, education, skills, and experience info.
-
-### **3. AI Enhancements**
-
-Each section can be enhanced using OpenAI with one click.
-
-### **4. Template Selection**
-
-User previews across 4 templates with color options.
-
-### **5. PDF Generation**
-
-Final resume downloaded as a professional PDF.
-
-### **6. Resume Upload (Optional)**
-
-User uploads resume → AI extracts → auto-fills builder fields.
+Auth state hydrates on app load via `GET /users/data` (see `src/App.jsx`). The response populates the Redux `auth` slice.
 
 ---
 
-# 🎯 **USP – Why AutoProfile is Unique**
+## Resume Builder
 
-* Clean, modern, minimal design
-* Very easy for beginners
-* AI-enhanced content that actually sounds professional
-* Template switching + color accent styling
-* Upload → Extract → Auto-fill feature
-* Fast, optimized, scalable system
+The builder (`src/pages/ResumeBuilder.jsx`) drives a single `resumeData` object through the following sections:
 
----
+- Personal Info
+- Professional Summary
+- Experience
+- Education
+- Projects
+- Skills
 
-# 📌 **Future Enhancements**
-
-* More templates
-* Drag-and-drop editor
-* Multi-language resume generation
-* AI job-matching feature
-* Export as Word, HTML, and LinkedIn-ready format
-* Dark mode
+Users can switch between the four templates (`classic`, `minimal`, `minimal-image`, `modern`), pick an accent color, toggle a public/shareable flag, and preview the resume live via `ResumePreview.jsx`.
 
 ---
 
-# 💬 **Conclusion**
+## Getting Started
 
-**AutoProfile** is a modern, fast, and fully AI-powered resume builder built for simplicity and performance.
-It bridges design, usability, and AI assistance to provide a seamless resume-building experience for students, professionals, and job seekers.
+### Prerequisites
+
+- Node.js 18+ (Vite 7 requirement)
+- A running instance of the AutoProfile backend
+
+### Install
+
+```bash
+npm install
+```
+
+### Environment
+
+Create a `.env` file at the project root:
+
+```env
+VITE_BASE_URL=http://localhost:3000/api
+```
+
+`VITE_BASE_URL` is consumed by `src/configs/axiosClient.js` as the Axios `baseURL`. All requests are sent with `withCredentials: true`, so the backend must set CORS to allow this origin with credentials.
+
+### Scripts
+
+| Command           | What it does                     |
+| ----------------- | -------------------------------- |
+| `npm run dev`     | Start the Vite dev server        |
+| `npm run build`   | Production build to `dist/`      |
+| `npm run preview` | Preview the production build     |
+| `npm run lint`    | Run ESLint over the project      |
+
+---
+
+## Deployment
+
+Deployed on **Vercel**. `vercel.json` rewrites all paths to `/index.html` so client-side routes (`/app/builder/:id`, `/view/:id`, etc.) resolve correctly on refresh.
+
+Set `VITE_BASE_URL` in the Vercel project's environment variables before deploying.
+
+---
+
+## Backend Contract
+
+The frontend expects the backend to expose (at minimum):
+
+- `GET  /users/data` — returns `{ user }` for the authenticated session
+- `GET  /resumes/get/:resumeId` — returns `{ resume }`
+- Resume create / update / delete endpoints used by the dashboard and builder
+
+Authentication is cookie-based (HTTP-only). No token is stored in `localStorage`.
